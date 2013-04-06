@@ -1,4 +1,4 @@
-package com.github.jeremiemartinez.zoomable;
+package fr.jmartinez.zoomable;
 
 import android.app.Activity;
 import android.os.Bundle;
