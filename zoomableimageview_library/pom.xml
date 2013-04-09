@@ -12,7 +12,7 @@
 	<groupId>com.github.jeremiemartinez</groupId>
 	<artifactId>zoomableimageview</artifactId>
 	<name>ZoomableImageView</name>
-	<version>1.0-SNAPSHOT</version>
+	<version>1.0</version>
 	<packaging>apklib</packaging>
 
 	<description>Simple Android ImageView that enables dragging and zooming.</description>
@@ -22,7 +22,7 @@
 		<url>https://github.com/jeremiemartinez/ZoomableImageView</url>
 		<connection>scm:git:git@github.com:jeremiemartinez/ZoomableImageView.git</connection>
 		<developerConnection>scm:git:git@github.com:jeremiemartinez/ZoomableImageView.git</developerConnection>
-		<tag>HEAD</tag>
+		<tag>zoomableimageview-1.0</tag>
 	</scm>
 
 	<developers>
