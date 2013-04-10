@@ -1,3 +1,18 @@
+/**
+ * Copyright 2012-2013 Jeremie Martinez (jeremiemartinez@gmail.com)
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not
+ * use this file except in compliance with the License. You may obtain a copy of
+ * the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+ * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+ * License for the specific language governing permissions and limitations under
+ * the License.
+ */
 package com.github.jeremiemartinez.zoomable;
 
 import android.content.Context;
@@ -9,10 +24,28 @@ import android.view.MotionEvent;
 import android.view.ScaleGestureDetector;
 import android.widget.ImageView;
 
+/**
+ * @author jmartinez
+ * 
+ *         Simple Android ImageView that enables dragging and zooming.
+ * 
+ */
+/**
+ * @author jmartinez
+ * 
+ */
+/**
+ * @author jmartinez
+ *
+ */
+/**
+ * @author jmartinez
+ * 
+ */
 public class ZoomableImageView extends ImageView {
 
-	private static final float MAX_SCALE = 3f;
-	private static final float MIN_SCALE = 1f;
+	private float maxScale = 3f;
+	private float minScale = 1f;
 
 	private enum State {
 		INIT, DRAG, ZOOM
@@ -95,6 +128,11 @@ public class ZoomableImageView extends ImageView {
 		return true;
 	}
 
+	/**
+	 * Set up the class. Method called by constructors.
+	 * 
+	 * @param context
+	 */
 	private void setUp(Context context) {
 		super.setClickable(false);
 		matrix = new Matrix();
@@ -121,6 +159,32 @@ public class ZoomableImageView extends ImageView {
 		setImageMatrix(matrix);
 	}
 
+	/**
+	 * Getter and setter for max/min scale. Default are min=1 and max=3
+	 */
+
+	public float getMaxScale() {
+		return maxScale;
+	}
+
+	public void setMaxScale(float maxScale) {
+		this.maxScale = maxScale;
+	}
+
+	public float getMinScale() {
+		return minScale;
+	}
+
+	public void setMinScale(float minScale) {
+		this.minScale = minScale;
+	}
+
+	/**
+	 * Drag method
+	 * 
+	 * @param current
+	 *            Current point to drag to.
+	 */
 	private void drag(PointF current) {
 		float deltaX = getMoveDraggingDelta(current.x - last.x, viewWidth, afterScaleDrawableWidth * currentScale);
 		float deltaY = getMoveDraggingDelta(current.y - last.y, viewHeight, afterScaleDrawableHeight * currentScale);
@@ -128,17 +192,27 @@ public class ZoomableImageView extends ImageView {
 		limitDrag();
 	}
 
+	/**
+	 * Scale method for zooming
+	 * 
+	 * @param focusX
+	 *            X of center of scale
+	 * @param focusY
+	 *            Y of center of scale
+	 * @param scaleFactor
+	 *            scale factor to zoom in/out
+	 */
 	private void scale(float focusX, float focusY, float scaleFactor) {
 		float lastScale = currentScale;
 		float newScale = lastScale * scaleFactor;
 
 		// Calculate next scale with resetting to max or min if required
-		if (newScale > MAX_SCALE) {
-			currentScale = MAX_SCALE;
-			scaleFactor = MAX_SCALE / lastScale;
-		} else if (newScale < MIN_SCALE) {
-			currentScale = MIN_SCALE;
-			scaleFactor = MIN_SCALE / lastScale;
+		if (newScale > maxScale) {
+			currentScale = maxScale;
+			scaleFactor = maxScale / lastScale;
+		} else if (newScale < minScale) {
+			currentScale = minScale;
+			scaleFactor = minScale / lastScale;
 		} else {
 			currentScale = newScale;
 		}
@@ -152,6 +226,9 @@ public class ZoomableImageView extends ImageView {
 		limitDrag();
 	}
 
+	/**
+	 * This method permits to keep drag and zoom inside the drawable. It makes sure the drag is staying in bound.
+	 */
 	private void limitDrag() {
 		matrix.getValues(finalTransformation);
 		float finalXTransformation = finalTransformation[Matrix.MTRANS_X];
@@ -207,6 +284,11 @@ public class ZoomableImageView extends ImageView {
 		return currentScale != 1f;
 	}
 
+	/**
+	 * Listener for detecting scale.
+	 * 
+	 * @author jmartinez
+	 */
 	private class ScaleListener extends ScaleGestureDetector.SimpleOnScaleGestureListener {
 		@Override
 		public boolean onScaleBegin(ScaleGestureDetector detector) {
@@ -221,6 +303,11 @@ public class ZoomableImageView extends ImageView {
 		}
 	}
 
+	/**
+	 * Listener for double tap detection
+	 * 
+	 * @author jmartinez
+	 */
 	private class GestureListener extends GestureDetector.SimpleOnGestureListener {
 
 		@Override
@@ -231,7 +318,7 @@ public class ZoomableImageView extends ImageView {
 				state = State.INIT;
 
 			} else {
-				scale(e.getX(), e.getY(), MAX_SCALE);
+				scale(e.getX(), e.getY(), maxScale);
 			}
 			return true;
 		}
