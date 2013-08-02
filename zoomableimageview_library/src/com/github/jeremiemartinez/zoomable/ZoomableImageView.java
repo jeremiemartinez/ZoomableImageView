@@ -30,18 +30,6 @@ import android.widget.ImageView;
  *         Simple Android ImageView that enables dragging and zooming.
  * 
  */
-/**
- * @author jmartinez
- * 
- */
-/**
- * @author jmartinez
- *
- */
-/**
- * @author jmartinez
- * 
- */
 public class ZoomableImageView extends ImageView {
 
 	private float maxScale = 3f;
